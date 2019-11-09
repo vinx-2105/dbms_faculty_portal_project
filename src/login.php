@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <html>
 
    <head>
@@ -26,6 +30,7 @@
                         </li>
                         <?php
                             if($_SESSION['loggedin']==true){
+                                echo "<li class='nav-item' 'navbar-right'><a class='nav-link' href='./profile_home.php'>My Profile</a></li>";
                                 echo "<li class='nav-item' 'navbar-right'><a class='nav-link'>".$_SESSION['username']."</a></li>";
                                 echo "<li class='nav-item' 'navbar-right'><a class='nav-link' href='./logout.php'>Logout</a></li>";
                             }

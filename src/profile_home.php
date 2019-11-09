@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    define('HOME_PATH', getcwd());
+
+    function get_abs_path($rel_path){
+        return HOME_PATH.$rel_path;
+    }
+?>
+
 <html>
 
    <head>
@@ -26,6 +35,7 @@
                         </li>
                         <?php
                             if($_SESSION['loggedin']==true){
+                                echo "<li class='nav-item' 'navbar-right'><a class='nav-link' href='./profile_home.php'>My Profile</a></li>";
                                 echo "<li class='nav-item' 'navbar-right'><a class='nav-link'>".$_SESSION['username']."</a></li>";
                                 echo "<li class='nav-item' 'navbar-right'><a class='nav-link' href='./logout.php'>Logout</a></li>";
                             }
@@ -39,12 +49,44 @@
             </div>
             <br><br><br>
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <h1 text-align="center">Welcome <?php echo $_POST["uname"]?></h1>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <?php
+                        $abs_path = get_abs_path('/../res/faculty_profile_images/default.png');
+                        // echo "<img src='".$abs_path."' alt='Profile Pic'>" ;
+                    ?>
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPO9CRBZvXer-YKt5Qicll9hyjJNEPt9GQGPNuJf3qjuP9Ep6aKw&s' alt='default-dp' height='150' width='150'>
+                    <br>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <h2>Vineet Madan</h2>
+                    <p>Dr</p>
+                    <p>Lecturer, Recommendation Systems</p>
+                </div>
+                <div class="col-md-2">
+
                 </div>
                 <div class="col-md-2"></div>
             </div>
+            <!-- google scholar and email div starts here-->
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <a style="text-align:center;" href='https://google.com'>Google Scholar</a>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                    <p><small>Email: vnt.madan@gmail.com</small></p>
+                    <p><small>Not accepting PhD students</small></p>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <!-- google scholar and email div ends here-->
+            <div class="row">
+            <!-- background, publications, grants, awards, teachings -->
+            </div>
+
         </div>
    </body>
 
