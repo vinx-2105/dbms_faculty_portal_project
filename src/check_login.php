@@ -4,7 +4,6 @@
 
 <?php
     require_once __DIR__ . "./../vendor/autoload.php";
-    // echo extension_loaded("mongodb") ? "loaded\n" : "not loaded\n";
     $client = (new MongoDB\Client);
     $collection = $client->FacultyProfiles->faculty_profiles;
 
@@ -14,6 +13,8 @@
     if($document){
         $_SESSION["loggedin"]=true;
         $_SESSION["username"]=$document['username'];
+        // $_SESSION["curr_doc"]=$document;
+        // $_SESSION["curr_collection"]=$collection;
         header("Location: ./index.php");
     }
 
