@@ -177,10 +177,17 @@
                             <h5><strong>Biography</strong></h5>
                             <?php
                                 echo "<p><small>".$document['basic_bio']."</small></p>";
-                                $news_arr = $document['news_arr'];
-                                for($i=0; $i<count($news_arr)&&$i<$LATEST_NEWS_COUNT; $i++){
-                                    echo "<p><small>".$news_arr[$i]['date']." - ".$news_arr[$i]['news']."</small></p>";
+
+                                echo "<p><small><strong>Latest News</strong></small></p>";
+
+                                $news = $document['news'];
+                                for($i=0; $i<count($news)&&$i<$LATEST_NEWS_COUNT; $i++){
+                                    $news_link = $news[$i]['link'];
+                                    $news_content = $news[$i]['content'];
+                                    $news_date = $news[$i]['date'];
+                                    echo "<a target='blank' href='".$news_link."'><small>".$news_date." ".$news_content."</small></a><br>";
                                 }
+                                echo "<br>"
                             ?>
                             <!-- <p><small>May 2020 - Internship at Goldman Sachs</small></p>
                             <p><small>May 2021 - Joining the Civil Services</small></p> -->
@@ -204,16 +211,15 @@
                         <?php
                             $courses_taught = $document['courses_taught'];
                             for($i=0; $i<count($courses_taught); $i++){
-                                echo"<p><small></small></p>";
+                                $start_date=$courses_taught[$i]['start_month'];
+                                $end_date=$courses_taught[$i]['end_month'];
+                                $course_code=$courses_taught[$i]['course_code'];
+                                $course_title=$courses_taught[$i]['course_title'];
+                                $course_website=$courses_taught[$i]['course_website'];
+
+                                echo "<a href='".$course_website."'><small>".$start_date." to ".$end_date." --> ".$course_code." ".$course_title."</small></a><br>";                            
                             }
                         ?>
-                        <h6><small><strong>Spring 2019</strong></small></h6>
-                        <a href="https://google.com"><small>CS-501 Computer Vision</small></a><br>
-                        <a href="https://google.com"><small>CS-529 Applied Artificial Intelligence</small></a><br>
-                        <a href="https://google.com"><small>CS-302 Maths for CS</small></a><br>
-                        <h6><small><strong>Fall 2019</strong></small></h6>
-                        <a href="https://google.com"><small>CS-501 Computer Vision</small></a><br>
-                        <a href="https://google.com"><small>CS-529 Applied Artificial Intelligence</small></a><br>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
