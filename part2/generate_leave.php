@@ -1,22 +1,26 @@
-<!DOCTYPE html>
+<?php
+    session_start();
+
+    if($_SESSION['loggedin']==false){
+        // echo $_SESSION['loggedin'];
+        header("Location: ./login.php");
+    }
+
+    // include('./connect_db.php');
+    include('./index.php');
+
+?>
 <html>
     <head>
         <title>Generate Leave</title>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     </head>
     <body>
-        <?php 
-            include ("index.php");
-        ?>
         <div class="container">
 
             <form action="/generate_leave_db.php" method="post">
                 <fieldset>
-                    
-                    <label for="faculty_id">Faculty Id: </label>
-                    <input type="email" name="faculty_id"><br>
-                   
+                    <!-- TODO: check if date is valid i.e after today -->
+
                     <label for="lv_start_date">Start Date:</label>
                     <input type="date" name="lv_start_date"><br>
   

@@ -16,12 +16,9 @@
     $route_q=pg_query($db_connection, "SELECT default_value from defaults where parameter='route_id'");
     $route_r=pg_fetch_assoc($route_q);
     $route_def=$route_r['default_value'];
-
-    
-    
 // }
 
-    $insert_query="INSERT INTO faculty(faculty_id,name, dept_id,leave_count,leave_route_id) VALUES ('".$_POST['faculty_id']."','".$_POST['fc_name']."','".$_POST['fc_dept_id']."','".$leave_count."','".$route_def."')";
+    $insert_query="INSERT INTO faculty(faculty_id, password, name,  dept_id,leave_count,leave_route_id) VALUES ('".$_POST['faculty_id']."','".$_POST['faculty_pwd']."','".$_POST['fc_name']."','".$_POST['fc_dept_id']."','".$leave_count."','".$route_def."')";
     $result=pg_query($db_connection,$insert_query);
     if(!$result){
         echo "Error";

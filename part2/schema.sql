@@ -1,12 +1,13 @@
 CREATE TABLE faculty(
 	faculty_id VARCHAR(256) PRIMARY KEY,
+	password VARCHAR(256) NOT NULL,
 	name VARCHAR(256) NOT NULL,
 	leave_count INT,
 	dept_id INT,
 	leave_route_id INT,
 	post_rank INT DEFAULT 0,
 	post_start_date Date DEFAULT NULL,
-	post_end_date Date DEFAULT NULL		
+	post_end_date Date DEFAULT NULL
 );
 
 CREATE TABLE faculty_history(
@@ -94,10 +95,11 @@ CREATE TABLE defaults(
 	default_value INT NOT NULL
 );
 
-INSERT INTO defaults values ('leave_count', 5); 
+INSERT INTO defaults values ('leave_count', 5);
+INSERT INTO defaults values ('route_id',1);
 /*
-status 
-1:	accepted 
+status
+1:	accepted
 2:	rejected
 3:	review
 
@@ -145,7 +147,7 @@ ADD FOREIGN KEY (leave_id) REFERENCES leave(leave_id) ;
 ALTER TABLE leave_history
 ADD FOREIGN KEY (route_id) REFERENCES leave_routes(route_id) ;
 ALTER TABLE leave_history
-ADD FOREIGN KEY (start_faculty_id) REFERENCES faculty(faculty_id); 
+ADD FOREIGN KEY (start_faculty_id) REFERENCES faculty(faculty_id);
 ALTER TABLE leave_history
 ADD FOREIGN KEY (end_faculty_id) REFERENCES faculty(faculty_id);
 

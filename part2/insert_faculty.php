@@ -16,6 +16,9 @@
                     
                     <label for="faculty_id">Faculty Id:</label><br>
                     <input type="email" name="faculty_id"><br>
+
+                    <label for="faculty_pwd">Password:</label><br>
+                    <input type="password" name="faculty_pwd"><br>
                    
                     <label for="fc_name">Name:</label><br>
                     <input type="text" name="fc_name"><br>
