@@ -61,3 +61,24 @@ CREATE TRIGGER update_ccf
 
 
 
+--------------------entering the leave history-----------------
+
+
+CREATE OR REPLACE FUNCTION f_new_leave()
+    RETURNS TRIGGER AS
+$$
+BEGIN
+    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id, status, remarks, transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,1,NEW.faculty_id,/*END FACULTY*/,/*status*/,/*remarks*/,NOW());
+    
+END;
+$$
+LANGUAGE 'plpgsql';
+
+
+DROP TRIGGER IF EXISTS new_leave on leave;
+
+CREATE TRIGGER new_leave
+    AFTER INSERT 
+    ON leave
+    FOR EACH ROW
+    EXECUTE PROCEDURE f_new_leave();

@@ -83,11 +83,19 @@ CREATE TABLE leave_history(
 	curr_node INT,
 	start_faculty_id VARCHAR(256) ,
 	end_faculty_id VARCHAR(256),
-	status INT,
+	status VARCHAR(16),
 	remarks TEXT,
 	transaction_time TIMESTAMP
 );
 
+/* ALTER TABLE leave_history ALTER COLUMN status TYPE VARCHAR;
+/*
+status
+accepted
+rejected
+review
+pending
+*/
 
 
 CREATE TABLE defaults(
@@ -97,13 +105,7 @@ CREATE TABLE defaults(
 
 INSERT INTO defaults values ('leave_count', 5);
 INSERT INTO defaults values ('route_id',1);
-/*
-status
-1:	accepted
-2:	rejected
-3:	review
 
-*/
 
 -- maximum number of steps for the leave application is fixed to 5
 
