@@ -65,33 +65,30 @@ CREATE TABLE leave(
 	leave_purpose text ,
 	start_date DATE NOT NULL,
 	num_days INT NOT NULL,
-	borrowed INT DEFAULT 0, 
 	leave_route_id INT, 
 	status INT DEFAULT 0
 );
+/* removed borrowed column*/
+
 
 /* status 
 0: pending
 1: accepted
 2: rejected
 */
+DROP TABLE IF EXISTS leave_history;
 
 CREATE TABLE leave_history(
 	transaction_id SERIAL PRIMARY KEY,
 	leave_id INT NOT NULL,
 	route_id INT NOT NULL,
 	curr_node INT,
-	start_faculty_id VARCHAR(256) ,
-	end_faculty_id VARCHAR(256),
-	post_id INT,
+	start_post_id VARCHAR(256) ,
+	end_post_id VARCHAR(256),
 	status VARCHAR(16),
 	remarks TEXT,
 	transactcreion_time TIMESTAMP
 );
-
-/* ALTER TABLE leave_history ALTER COLUMN status TYPE VARCHAR(16);
---create sequence leave_history_transaction_id_seq;
---alter sequence leave_history_transaction_id_seq owned by leave_history.transaction_id;
 
 /*
 status
@@ -136,9 +133,6 @@ ADD FOREIGN KEY (hod_faculty_id) REFERENCES faculty(faculty_id);
 
 ALTER TABLE cross_cut_faculty
 ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id);
-
-ALTER TABLE faculty_history
-ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id);
 -------------------
 --leave and leave history constraint
 
@@ -152,11 +146,6 @@ ALTER TABLE leave_history
 ADD FOREIGN KEY (leave_id) REFERENCES leave(leave_id) ;
 ALTER TABLE leave_history
 ADD FOREIGN KEY (route_id) REFERENCES leave_routes(route_id) ;
-ALTER TABLE leave_history
-ADD FOREIGN KEY (start_faculty_id) REFERENCES faculty(faculty_id);
-ALTER TABLE leave_history
-ADD FOREIGN KEY (end_faculty_id) REFERENCES faculty(faculty_id);
-
 
 
 
