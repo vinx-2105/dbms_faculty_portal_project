@@ -77,18 +77,22 @@ CREATE TABLE leave(
 */
 
 CREATE TABLE leave_history(
-	transaction_id INT PRIMARY KEY,
+	transaction_id SERIAL PRIMARY KEY,
 	leave_id INT NOT NULL,
 	route_id INT NOT NULL,
 	curr_node INT,
 	start_faculty_id VARCHAR(256) ,
 	end_faculty_id VARCHAR(256),
+	post_id INT,
 	status VARCHAR(16),
 	remarks TEXT,
-	transaction_time TIMESTAMP
+	transactcreion_time TIMESTAMP
 );
 
-/* ALTER TABLE leave_history ALTER COLUMN status TYPE VARCHAR;
+/* ALTER TABLE leave_history ALTER COLUMN status TYPE VARCHAR(16);
+--create sequence leave_history_transaction_id_seq;
+--alter sequence leave_history_transaction_id_seq owned by leave_history.transaction_id;
+
 /*
 status
 accepted

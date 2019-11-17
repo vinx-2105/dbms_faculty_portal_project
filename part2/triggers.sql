@@ -67,9 +67,25 @@ CREATE TRIGGER update_ccf
 CREATE OR REPLACE FUNCTION f_new_leave()
     RETURNS TRIGGER AS
 $$
+DECLARE
+    route_taken RECORD;
+    lv_curr_node INT:=1;
+    lv_start_dept INT;
+    lv_end_faculty VARCHAR(256);
+    post_rank_faculty INT;
+    lv_status VARCHAR(16):='pending';
 BEGIN
-    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id, status, remarks, transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,1,NEW.faculty_id,/*END FACULTY*/,/*status*/,/*remarks*/,NOW());
-    
+    RAISE INFO 'route %',NEW.leave_route_id;
+
+    SELECT * INTO route_taken FROM leave_routes WHERE route_id=NEW.leave_route_id;
+    SELECT  dept_id INTO lv_start_dept FROM faculty WHERE faculty_id=NEW.faculty_id;
+    post_rank_faculty:=route_taken.node1_rankid;
+    if post_rank_faculty=10 THEN
+        post_rank_faculty:=post_rank_faculty+lv_start_dept;
+    END IF;
+    SELECT faculty_id into lv_end_faculty FROM faculty WHERE post_rank=post_rank_faculty;
+    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id,post_id, status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,NEW.faculty_id,lv_end_faculty,post_rank_faculty,lv_status,NOW());
+    RETURN NEW;
 END;
 $$
 LANGUAGE 'plpgsql';
