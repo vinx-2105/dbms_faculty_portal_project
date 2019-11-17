@@ -58,12 +58,19 @@
         <h4>Routes</h4>
         <div class="container">
         <?php 
+            
+            function get_post_title($db_connection, $id){
+                if($id==NULL) return;
+                $post_title_q=pg_query($db_connection,"SELECT * FROM post_rank WHERE rank_id=".$id);
+                if(!$post_title_q)echo"Error Post Title";
+                return pg_fetch_assoc($post_title_q)['rank_title'];
+            }
             $fac_q=pg_query($db_connection, "SELECT  * FROM leave_routes");
             if(!$fac_q){
                 echo "Routes Not Found";
             }
             while ($row=pg_fetch_assoc($fac_q)){
-                echo $row['route_id']." ".$row['num_nodes']." ".$row['node1_rankid']." ".$row['node2_rankid']." ".$row['node3_rankid']." ".$row['node4_rankid']." ".$row['node5_rankid']."<br>";
+                echo $row['route_id']." ".$row['num_nodes']." ".get_post_title($db_connection,$row['node1_rankid'])." ".get_post_title($db_connection,$row['node2_rankid'])." ".get_post_title($db_connection,$row['node3_rankid'])." ".get_post_title($db_connection,$row['node4_rankid'])." ".get_post_title($db_connection,$row['node5_rankid'])."<br>";
             }
         ?>
         </div>

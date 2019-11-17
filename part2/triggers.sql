@@ -10,9 +10,6 @@ BEGIN
             RAISE EXCEPTION 'DEPTARMENT OF FACULTY SHOULD BE SAME AS THE FOR HOD POSITION';
         END IF;
         UPDATE faculty SET post_rank = 10+NEW.dept_id WHERE faculty_id=NEW.hod_faculty_id;
-        IF EXISTS  (SELECT faculty_id FROM faculty WHERE faculty_id= OLD.hod_faculty_id) THEN
-            UPDATE faculty SET post_rank = 0 WHERE faculty_id=OLD.hod_faculty_id;
-        END IF;
     END IF; 
     RETURN NEW;
 END;
@@ -35,9 +32,6 @@ $BODY$
 BEGIN
     IF EXISTS (SELECT faculty_id FROM faculty WHERE faculty_id=NEW.faculty_id) THEN
         UPDATE faculty SET post_rank = 100+NEW.ccf_id WHERE faculty_id=NEW.faculty_id;
-        if EXISTS  (SELECT faculty_id FROM faculty WHERE faculty_id= OLD.faculty_id) THEN
-            UPDATE faculty SET post_rank = 0 WHERE faculty_id=OLD.faculty_id;
-        END IF;
     END IF; 
     RETURN NEW;
 END;
@@ -58,6 +52,81 @@ CREATE TRIGGER update_ccf
 
 
 -------------------Logging the faculty info----------------------
+--this trigger function logs into faculty history any changes that occur
+--also if a new HOD is set the older one's post rank is updated back to 0.sele
+
+CREATE OR REPLACE FUNCTION f_faculty_log_update()
+    RETURNS TRIGGER AS 
+$$
+DECLARE
+    old_faculty_id VARCHAR(256);
+BEGIN
+    if OLD.post_rank=0 and NEW.post_rank>0 THEN
+        IF EXISTS (SELECT faculty_id FROM faculty WHERE post_rank=NEW.post_rank) THEN
+            SELECT faculty_id INTO old_faculty_id FROM faculty WHERE post_rank=NEW.post_rank;
+            UPDATE faculty SET post_rank=0 WHERE faculty_id=old_faculty_id;
+        END IF;
+    
+    END IF;
+    INSERT INTO faculty_history(faculty_id,old_post,new_post,transaction_time) VALUES (NEW.faculty_id,OLD.post_rank,NEW.post_rank,NOW());
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+
+DROP TRIGGER IF EXISTS faculty_log_update  ON faculty;
+
+CREATE TRIGGER faculty_log_update
+    BEFORE UPDATE
+    ON faculty
+    FOR EACH ROW
+    EXECUTE PROCEDURE f_faculty_log_update();
+
+
+--------insert faculty
+
+CREATE OR REPLACE FUNCTION f_faculty_log_insert()
+    RETURNS TRIGGER AS
+$$
+DECLARE 
+    old_post_rank INT:=-1;
+BEGIN
+    INSERT INTO faculty_history(faculty_id,old_post,new_post,transaction_time) VALUES (NEW.faculty_id,old_post_rank,NEW.post_rank,NOW());
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS faculty_log_insert on faculty;
+
+CREATE TRIGGER faculty_log_insert
+    BEFORE INSERT
+    ON faculty
+    FOR EACH ROW
+    EXECUTE PROCEDURE f_faculty_log_insert();
+
+--delete
+
+CREATE OR REPLACE FUNCTION f_faculty_log_delete()
+    RETURNS TRIGGER AS
+$$
+DECLARE 
+    new_post_rank INT:=-1;
+BEGIN
+    INSERT INTO faculty_history(faculty_id,old_post,new_post,transaction_time) VALUES (OLD.faculty_id,OLD.post_rank,new_post_rank,NOW());
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS faculty_log_delete on faculty;
+
+CREATE TRIGGER faculty_log_delete
+    BEFORE DELETE
+    ON faculty
+    FOR EACH ROW
+    EXECUTE PROCEDURE f_faculty_log_delete();
 
 
 
@@ -67,9 +136,25 @@ CREATE TRIGGER update_ccf
 CREATE OR REPLACE FUNCTION f_new_leave()
     RETURNS TRIGGER AS
 $$
+DECLARE
+    route_taken RECORD;
+    lv_curr_node INT:=1;
+    lv_start_dept INT;
+    lv_end_faculty VARCHAR(256);
+    post_rank_faculty INT;
+    lv_status VARCHAR(16):='pending';
 BEGIN
-    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id, status, remarks, transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,1,NEW.faculty_id,/*END FACULTY*/,/*status*/,/*remarks*/,NOW());
-    
+    RAISE INFO 'route %',NEW.leave_route_id;
+
+    SELECT * INTO route_taken FROM leave_routes WHERE route_id=NEW.leave_route_id;
+    SELECT  dept_id INTO lv_start_dept FROM faculty WHERE faculty_id=NEW.faculty_id;
+    post_rank_faculty:=route_taken.node1_rankid;
+    if post_rank_faculty=10 THEN
+        post_rank_faculty:=post_rank_faculty+lv_start_dept;
+    END IF;
+    SELECT faculty_id into lv_end_faculty FROM faculty WHERE post_rank=post_rank_faculty;
+    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id,post_id, status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,NEW.faculty_id,lv_end_faculty,post_rank_faculty,lv_status,NOW());
+    RETURN NEW;
 END;
 $$
 LANGUAGE 'plpgsql';

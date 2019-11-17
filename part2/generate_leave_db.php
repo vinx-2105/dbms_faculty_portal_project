@@ -1,7 +1,7 @@
 <?php
     include ("index.php");
 
-    $check_pending_q=pg_query($db_connection,"SELECT * FROM leave WHERE faculty_id='".$_POST['faculty_id']."'");
+    $check_pending_q=pg_query($db_connection,"SELECT * FROM leave WHERE faculty_id='".$_SESSION['username']."'");
     if(!$check_pending_q){
         echo "Error";
     }
@@ -10,7 +10,7 @@
     }
     
 
-    $faculty_q=pg_query($db_connection,"SELECT * FROM faculty WHERE faculty_id='".$_POST['faculty_id']."'");
+    $faculty_q=pg_query($db_connection,"SELECT * FROM faculty WHERE faculty_id='".$_SESSION['username']."'");
     if(!$faculty_q||pg_num_rows($faculty_q)<=0){
         echo "Error";
     }
@@ -22,7 +22,7 @@
         }
         else $borrowed=0;
         
-        $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,borrowed,leave_route_id) VALUES('".$_POST['faculty_id']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$borrowed.",".$row['leave_route_id'].")";
+        $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,borrowed,leave_route_id) VALUES('".$_SESSION['username']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$borrowed.",".$row['leave_route_id'].")";
         $insert_r=pg_query($db_connection,$insert_q);
         if(!$insert_r){
             echo "Error";
