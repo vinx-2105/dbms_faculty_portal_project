@@ -61,6 +61,7 @@ $$
 DECLARE
     old_faculty_id VARCHAR(256);
 BEGIN
+
     if OLD.post_rank=0 and NEW.post_rank>0 THEN
         IF EXISTS (SELECT faculty_id FROM faculty WHERE post_rank=NEW.post_rank) THEN
             SELECT faculty_id INTO old_faculty_id FROM faculty WHERE post_rank=NEW.post_rank;
@@ -140,20 +141,19 @@ DECLARE
     route_taken RECORD;
     lv_curr_node INT:=1;
     lv_start_dept INT;
-    lv_end_faculty VARCHAR(256);
-    post_rank_faculty INT;
+    lv_start_post INT :=0;
+    lv_end_post INT;
     lv_status VARCHAR(16):='pending';
 BEGIN
     RAISE INFO 'route %',NEW.leave_route_id;
 
     SELECT * INTO route_taken FROM leave_routes WHERE route_id=NEW.leave_route_id;
     SELECT  dept_id INTO lv_start_dept FROM faculty WHERE faculty_id=NEW.faculty_id;
-    post_rank_faculty:=route_taken.node1_rankid;
-    if post_rank_faculty=10 THEN
-        post_rank_faculty:=post_rank_faculty+lv_start_dept;
+    lv_end_post:=route_taken.node1_rankid;
+    if lv_end_post=10 THEN
+        lv_end_post:=lv_end_post+lv_start_dept;
     END IF;
-    SELECT faculty_id into lv_end_faculty FROM faculty WHERE post_rank=post_rank_faculty;
-    INSERT INTO leave_history (leave_id, route_id, curr_node,start_faculty_id, end_faculty_id,post_id, status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,NEW.faculty_id,lv_end_faculty,post_rank_faculty,lv_status,NOW());
+    INSERT INTO leave_history (leave_id, route_id, curr_node,start_post_id, end_post_id, status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,lv_start_post,lv_end_post,lv_status,NOW());
     RETURN NEW;
 END;
 $$

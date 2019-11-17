@@ -17,12 +17,8 @@
     else{
         $row=pg_fetch_assoc($faculty_q);
         echo "Leave Route ".$row['faculty_id']." ".$row['leave_route_id'];
-        if(($row['leave_count']-$_POST['lv_num_days'])<0){
-            $borrowed=1;
-        }
-        else $borrowed=0;
-        
-        $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,borrowed,leave_route_id) VALUES('".$_SESSION['username']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$borrowed.",".$row['leave_route_id'].")";
+
+        $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,leave_route_id) VALUES('".$_SESSION['username']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$row['leave_route_id'].")";
         $insert_r=pg_query($db_connection,$insert_q);
         if(!$insert_r){
             echo "Error";
