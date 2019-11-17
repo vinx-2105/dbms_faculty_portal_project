@@ -19,6 +19,12 @@
     $leave_count = $faculty_r['leave_count'];
 
     $special_post = $faculty_r['post_rank'];
+
+    $post_id = $faculty_r['post_rank'];
+
+    if($special_post>10 && $special_post<100){
+        $special_post=10;
+    }
 ?>
 
 <html>
@@ -83,6 +89,9 @@
                             $rank_title = $special_post_r['rank_title'];
 
                             echo "<form class='form-inline' action='/special_portal.php' method='post'>";
+                            echo "<input type='hidden' id='rank_title' name='rank_title' value='".$rank_title."'>";
+                            echo "<input type='hidden' id='special_post' name='special_post' value='".$special_post."'>";
+                            echo "<input type='hidden' id='post_id' name='post_id' value='".$post_id."'>";
                             echo "<button type='submit' style='width:30em; margin-right:2em;' class='btn btn-primary'>Go to ".$rank_title." Portal</button></form>";
 
                         }

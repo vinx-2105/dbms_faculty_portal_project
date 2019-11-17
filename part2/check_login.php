@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include('./connect_db.php');
+    include('./index.php');
 
     $login_q = pg_query($db_connection,"SELECT * FROM faculty WHERE faculty_id='".$_POST['uname']."' AND password='".$_POST['psw']."'");
 
