@@ -171,11 +171,15 @@ BEGIN
 
     SELECT * INTO route_taken FROM leave_routes WHERE route_id=NEW.leave_route_id;
     SELECT  dept_id INTO lv_start_dept FROM faculty WHERE faculty_id=NEW.faculty_id;
+
     lv_end_post:=route_taken.node1_rankid;
     if lv_end_post=10 THEN
         lv_end_post:=lv_end_post+lv_start_dept;
     END IF;
     SELECT faculty_id INTO lv_approval_faculty FROM faculty WHERE post_rank=lv_end_post;
+
+    RAISE INFO "approval faculty %",approval_faculty;
+    RAISE INFO "lv end post %",lv_end_post;
     INSERT INTO leave_history (leave_id, route_id, curr_node,start_post_id, end_post_id, approval_faculty,status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,lv_start_post,lv_end_post,lv_approval_faculty,lv_status,NOW());
     RETURN NEW;
 END;
