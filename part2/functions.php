@@ -40,4 +40,13 @@
         $r = pg_fetch_assoc($q);
         return $r;
     }
+
+    function get_post_by_id($db_connection,$post_id){
+        if($post_id>=10&&$post_id<100){
+            $post_id=10;
+        }
+        $q = pg_query($db_connection, "SELECT * FROM post_rank WHERE rank_id=".$post_id);
+        $r = pg_fetch_assoc($q);
+        return $r;
+    }
 ?>

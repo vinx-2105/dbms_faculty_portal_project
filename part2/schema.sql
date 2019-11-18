@@ -4,7 +4,6 @@ CREATE TABLE faculty(
 	name VARCHAR(256) NOT NULL,
 	leave_count INT,
 	dept_id INT,
-	leave_route_id INT,
 	post_rank INT DEFAULT 0,
 	post_start_date Date DEFAULT NULL,
 	post_end_date Date DEFAULT NULL
@@ -28,7 +27,11 @@ CREATE TABLE department(
 CREATE TABLE post_rank(
 	rank_id INT PRIMARY KEY,
 	rank_title VARCHAR(256) UNIQUE NOT NULL
+	leave_route_id INT,
 );
+
+
+
 
 INSERT INTO post_rank VALUES (1,'Director');
 INSERT INTO post_rank VALUES (0,'Faculty');
@@ -146,7 +149,10 @@ ALTER TABLE leave_history
 ADD FOREIGN KEY (route_id) REFERENCES leave_routes(route_id) ;
 
 
-
+-----------------new changes to route id
+-- ALTER TABLE faculty DROP COLUMN leave_route_id;
+-- ALTER TABLE post_rank ADD leave_route_id INT;
+-- ALTER TABLE post_rank ADD FOREIGN KEY (leave_route_id)  REFERENCES leave_routes(route_id);
 
 /*
 

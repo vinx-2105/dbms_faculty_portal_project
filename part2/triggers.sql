@@ -167,3 +167,32 @@ CREATE TRIGGER new_leave
     ON leave
     FOR EACH ROW
     EXECUTE PROCEDURE f_new_leave();
+
+
+-----------------------accept the transaction-------------
+-- done in php
+-- CREATE OR REPLACE FUNCTION f_leave_accept()
+--     RETURNS TRIGGER AS
+-- $$
+-- DECLARE 
+--     route_taken RECORD;
+
+-- BEGIN
+--     if NEW.status='accepted' THEN
+--         SELECT * INTO route_taken FROM leave_routes WHERE route_id=NEW.route_id;
+--         IF route_taken.num_nodes == 
+--         INSERT INTO leave_history (leave_id,route_id,curr_node)
+--     END IF;
+--     RETURN NEW;
+-- END;
+-- $$
+-- LANGUAGE 'plpgsql'
+
+
+-- DROP TRIGGER IF EXISTS leave_accept on leave_history
+
+-- CREATE TRIGGER leave_accept
+--     AFTER UPDATE
+--     ON leave_history
+--     FOR EACH ROW
+--     EXECUTE PROCEDURE f_leave_accept();

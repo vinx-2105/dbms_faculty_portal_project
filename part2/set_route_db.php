@@ -10,7 +10,7 @@
         while($posts_r=pg_fetch_assoc($posts_q)){
             $index='post_'.$posts_r['rank_id'];
             if($_POST[$index]!=''){
-                $update_q=pg_query($db_connection,"UPDATE faculty SET leave_route_id='".$_POST[$index]."' WHERE post_rank='".$posts_r['rank_id']."'");
+                $update_q=pg_query($db_connection,"UPDATE post_rank SET leave_route_id='".$_POST[$index]."' WHERE rank_id='".$posts_r['rank_id']."'");
                 if(!$update_q){
                     echo "Error";
                 }
