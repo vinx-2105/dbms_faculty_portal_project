@@ -150,16 +150,7 @@ ADD FOREIGN KEY (route_id) REFERENCES leave_routes(route_id) ;
 
 /*
 
-insert into department(dept_id,name,hod_faculty_id) values (1,'cs', NULL);
-insert into post_rank(rank_id, rank_title) values (1,'academic faculty');
-insert into post_rank values(10,'hod');
-insert into faculty(faculty_id,name,leave_count, dept_id,post_rank,route_id) values(1234,'mehakjot', 5,1,1,123);
-insert into faculty(faculty_id,name, leave_count,dept_id, post_rank) values(1235,'vineet', 5,1,10);
-insert into leave_routes(route_id, num_nodes,node1_rankid) values(123,1,10);
+insert into department(dept_id,name,hod_faculty_id) values (1,'CSE');
+insert into leave_route(num_nodes,node1_rankid,node2_rankid) VALUES (2,10,1);
 
-insert into leave values(123411,1234,123,'2019-11-14',2,0,3);
 
-insert into 
-*/
-
---create trigger to input to faculty history.
