@@ -9,7 +9,7 @@
 <?php
    session_start();
    $host        = "host =localhost";
-   $dbname      = "dbname = trail1";
+   $dbname      = "dbname = portal";
    $credentials = "user = postgres password=pass123";
    $db_connection = pg_connect( "$host $dbname $credentials");
    if(!$db_connection) {

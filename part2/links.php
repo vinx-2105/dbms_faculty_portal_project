@@ -6,7 +6,8 @@
 <a href="/set_defaults.php">Set Defaults</a><br>
 <a href="/create_route.php">Create Route</a><br>
 <a href="/set_post.php">Set Posts</a><br>
-<a href="/generate_leave.php">Generate Leave</a><br>
+<!-- <a href="/generate_leave.php">Generate Leave</a><br> -->
+<a href="/set_route.php">Set Route</a><br>
 
 
 

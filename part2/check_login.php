@@ -8,7 +8,6 @@
     if(pg_num_rows($login_q)==1){
         $_SESSION["loggedin"]=true;
         $_SESSION["username"]=$_POST['uname'];
-        // $_SESSION[""]
 
         $faculty_q = pg_query($db_connection,"SELECT * FROM faculty WHERE faculty_id='".$_SESSION['username']."'");
 

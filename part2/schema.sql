@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS faculty  ;
+
 CREATE TABLE faculty(
 	faculty_id VARCHAR(256) PRIMARY KEY,
 	password VARCHAR(256) NOT NULL,
@@ -9,6 +11,9 @@ CREATE TABLE faculty(
 	post_end_date Date DEFAULT NULL
 );
 
+DROP TABLE IF EXISTS faculty_history  ;
+
+
 CREATE TABLE faculty_history(
 	transaction_id SERIAL PRIMARY KEY,
 	faculty_id VARCHAR(256),
@@ -17,17 +22,22 @@ CREATE TABLE faculty_history(
 	new_post INT
 );
 
+DROP TABLE IF EXISTS department  ;
+
+
 CREATE TABLE department(
 	dept_id SERIAL PRIMARY KEY,
 	name VARCHAR(256) UNIQUE,
 	hod_faculty_id VARCHAR(256)
 );
 
+DROP TABLE IF EXISTS post_rank  ;
+
 
 CREATE TABLE post_rank(
 	rank_id INT PRIMARY KEY,
-	rank_title VARCHAR(256) UNIQUE NOT NULL
-	leave_route_id INT,
+	rank_title VARCHAR(256) UNIQUE NOT NULL,
+	leave_route_id INT
 );
 
 
@@ -44,6 +54,7 @@ rank 1 : director
 rank 10 : HOD
 rank 100+i: ccf, i=ccf_id 
 */
+DROP TABLE IF EXISTS cross_cut_faculty  ;
 
 CREATE TABLE cross_cut_faculty(
 	ccf_id SERIAL PRIMARY KEY,
@@ -51,6 +62,7 @@ CREATE TABLE cross_cut_faculty(
 	faculty_id VARCHAR(256)
 );
 
+DROP TABLE IF EXISTS leave_routes  ;
 
 CREATE TABLE leave_routes(
 	route_id SERIAL PRIMARY KEY,
@@ -62,7 +74,7 @@ CREATE TABLE leave_routes(
 	node5_rankid INT	
 );
 
-DROP TABLE IF EXISTS leave;
+DROP TABLE IF EXISTS leave  ;
 CREATE TABLE leave(
 	leave_id SERIAL PRIMARY KEY,
 	faculty_id VARCHAR(256) NOT NULL,
@@ -80,7 +92,7 @@ CREATE TABLE leave(
 1: accepted
 2: rejected
 */
-DROP TABLE IF EXISTS leave_history;
+DROP TABLE IF EXISTS leave_history  ;
 
 CREATE TABLE leave_history(
 	transaction_id SERIAL PRIMARY KEY,
@@ -154,9 +166,9 @@ ADD FOREIGN KEY (route_id) REFERENCES leave_routes(route_id) ;
 -- ALTER TABLE post_rank ADD leave_route_id INT;
 -- ALTER TABLE post_rank ADD FOREIGN KEY (leave_route_id)  REFERENCES leave_routes(route_id);
 
-/*
 
-insert into department(dept_id,name,hod_faculty_id) values (1,'CSE');
-insert into leave_route(num_nodes,node1_rankid,node2_rankid) VALUES (2,10,1);
+
+insert into department(name) values ('CSE');
+insert into leave_routes(num_nodes,node1_rankid,node2_rankid) VALUES (2,10,1);
 
 
