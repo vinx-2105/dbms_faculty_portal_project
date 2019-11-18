@@ -47,8 +47,29 @@ CREATE TRIGGER update_ccf
     FOR EACH ROW
     EXECUTE PROCEDURE f_update_ccf();
 
--------------------UPDATE DIRECTOR-----------------
+-------------------UPDATE CCF-----------------
 
+CREATE OR REPLACE FUNCTION f_update_ccf_unique()
+    RETURNS TRIGGER AS
+$$
+DECLARE 
+    fac_id VARCHAR(256);
+BEGIN
+    IF EXISTS (SELECT * FROM cross_cut_faculty where faculty_id=NEW.faculty_id) THEN
+        RETURN NULL;
+    END IF;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS update_ccf_unique on cross_cut_faculty;
+
+CREATE TRIGGER update_ccf_unique
+    BEFORE UPDATE
+    ON cross_cut_faculty
+    FOR EACH ROW
+    EXECUTE PROCEDURE f_update_ccf_unique();
 
 
 -------------------Logging the faculty info----------------------

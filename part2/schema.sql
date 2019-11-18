@@ -134,11 +134,6 @@ ALTER TABLE faculty
 ADD FOREIGN KEY (dept_id) REFERENCES department(dept_id);
 
 
---foreign key constraints for routes
-ALTER TABLE faculty
-ADD FOREIGN KEY (leave_route_id) REFERENCES leave_routes(route_id);
-
-
 
 --foregin key constraint for HOD
 ALTER TABLE department
