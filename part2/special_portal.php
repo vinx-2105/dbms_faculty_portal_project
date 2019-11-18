@@ -20,13 +20,12 @@
     $department_r = pg_fetch_assoc($department_q);
     $department_name = $department_r['name'];
 
-    //TODO: show all the history of transactions by this hod
 
     //list of transactions pending with this person
     $trans_pending_q = pg_query($db_connection, "SELECT * FROM leave_history WHERE end_post_id='".$post_id."' AND status='pending'");
 
     if(pg_num_rows($trans_pending_q)==0){
-        echo "<div class='container'><div class='jumbotron'><h4>No pending leaves</h4></div></div>";
+        echo "<div class='row'><div class='col-md-12'><br><h4>No Leaves Pending With Me</h4><br></div></div>";
     }
 
     $i=1;
@@ -35,7 +34,7 @@
         $this_leave_r = pg_fetch_assoc($this_leave_q);
         echo "<div class='row' style='border-style:solid; background-color:#d5d8dc;' ><div class='col-md-2'>";
         echo "<br><p>     # ".$i."</p></div>";
-        echo "<div class='col-md-8'><br>";
+        echo "<div class='col-md-8'><h3>Pending With Me</h3><br>";
         echo "<p><small>Leave ID - ".$trans_pending_r['leave_id']."</small></p>";
         echo "<p><small>Faculty ID - ".$this_leave_r['faculty_id']."</small></p>";
         echo "<p><small>Start Date of Leave - ".$this_leave_r['start_date']."</small></p>";
@@ -57,5 +56,38 @@
         echo "</div><div class='col-md-2'></div></div>";
         $i++;
     }
+
+    //show all the history of transactions by this hod
+    //get the distinct leave ids of the transactions where this guy is involved
+
+    $leave_ids_q = pg_query($db_connection, "SELECT distinct(leave_id) FROM leave_history WHERE start_post_id=".$post_id."OR end_post_id=".$post_id);
+
+    echo "<div class='row'><div class='col-md-12'><h4><br>Past Leave Applications For Me</h4><br>";
+    
+    echo "<table class='table table-striped table-dark'><thead><tr><th scope='col'>Leave ID</th><th scope='col'>Faculty</th><th scope='col'>Status</th><th scope='col'>See Detail</th></tr></thead>";
+
+
+    while($leave_ids_r=pg_fetch_assoc($leave_ids_q)){
+        $leave_id = $leave_ids_r['leave_id'];
+
+        //get the record of this leave from the leaves table
+        $this_leave_q = pg_query($db_connection, "SELECT * FROM leave WHERE leave_id=".$leave_id);
+        $this_leave_r = pg_fetch_assoc($this_leave_q);
+
+        echo "<tr>";
+        echo "<td>".$leave_id."</td>";
+
+        echo "<td>".$this_leave_r['faculty_id']."</td>";
+
+        echo "<td>".$this_leave_r['status']."</td>";
+
+        echo "<td>";
+        echo "<form class='form-inline' action='/leave_application_detail.php' method='get'>";
+        echo "<input type='hidden' id='leave_id' name='leave_id' value='".$leave_id."'>";
+        echo "<button type='submit'  class='btn btn-sm btn-danger'><small>See Detail</small></button></form></td>";
+        echo "</tr>";
+    }
+
+    echo "</table></div></div>";
 
 ?>

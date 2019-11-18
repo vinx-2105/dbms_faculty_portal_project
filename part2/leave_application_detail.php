@@ -90,7 +90,7 @@
 
                                 echo "<table class='table table-striped table-dark'>";
 
-                                echo "<thead><tr><th scope='col'>Action</th><th scope='col'>Start Faculty Origin</th><th scope='col'>Destination Faculty Origin</th><th scope='col'>Date & Time</th><th scope='col'>Remarks</th></tr></thead>";
+                                echo "<thead><tr><th scope='col'>Action</th><th scope='col'>Start Faculty Origin</th><th scope='col'>Destination Faculty</th><th scope='col'>Date & Time</th><th scope='col'>Remarks</th></tr></thead>";
                                 // echo "<thead><tr><th scope='col'>Action</th><th scope='col'>Date & Time</th><th scope='col'>Remarks</th></tr></thead>";
 
                                 $action_taker = get_faculty_by_post($db_connection,$transactions_r['start_post_id']);

@@ -24,10 +24,10 @@
             $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,leave_route_id) VALUES('".$_SESSION['username']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$post_r['leave_route_id'].")";
             $insert_r=pg_query($db_connection,$insert_q);
             if(!$insert_r){
-                echo "Error";
+                header('Location: ./error.php');
             }
             else{
-                echo "Success";
+                header('Location: ./my_leave_history.php');
             }
         }
     }
