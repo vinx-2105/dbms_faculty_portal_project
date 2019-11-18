@@ -26,18 +26,22 @@
 
         <?php
             while($my_leaves_r = pg_fetch_assoc($my_leaves_q)){
-                $this_leave_q = pg_query($db_connection, "SELECT * FROM leave_history WHERE faculty_id='".$faculty_id."' AND leave_id='".$my_leaves_r['leave_id']."' ORDER BY(transaction_time)");
+                $this_leave_q = pg_query($db_connection, "SELECT * FROM leave_history WHERE leave_id='".$my_leaves_r['leave_id']."' AND leave_id='".$my_leaves_r['leave_id']."' ORDER BY(transaction_time)");
                 $i=0;
                 $filing_date=NULL;
                 $result_date=NULL;
 
                 while($this_leave_r=pg_fetch_assoc($this_leave_q)){
                     if($i==0){
-                        $filing_date = $this_leave_r['transactiontimestamp_time'];
+                        $filing_date = $this_leave_r['transaction_time'];
+                        $filing_date = date('d-m-Y', strtotime($filing_date));
                     }
-                    if($my_leaves_r['status']!='pending'){
-                        $result_date = $this_leave_r['transactiontimestamp_time'];
+                    else if($my_leaves_r['status']!='pending'){
+                        $result_date = $this_leave_r['transaction_time'];
+                        $result_date = date('d-m-Y', strtotime($result_date));
                     }
+
+                    $i++;
                 }
                 echo "<tr>";
                 echo "<td>".$my_leaves_r['leave_id']."</td>";
@@ -50,9 +54,10 @@
                 }
                 echo "<td>".$my_leaves_r['status']."</td>";
 
-                echo "<form class='form-inline' action='/leave_application_detail.php' method='post'>";
-                echo "<input type='hidden' id='leave_application_id' name='leave_application_id' value='".$my_leaves_r['leave_id']."'>";
-                echo "<button type='submit'  class='btn btn-sm btn-danger'><small>See Detail</small></button></form>";
+                echo "<td>";
+                echo "<form class='form-inline' action='/leave_application_detail.php' method='get'>";
+                echo "<input type='hidden' id='leave_id' name='leave_id' value='".$my_leaves_r['leave_id']."'>";
+                echo "<button type='submit'  class='btn btn-sm btn-danger'><small>See Detail</small></button></form></td>";
                 echo "</tr>";
             }
         ?>

@@ -59,6 +59,7 @@ CREATE TABLE leave_routes(
 	node5_rankid INT	
 );
 
+DROP TABLE IF EXISTS leave;
 CREATE TABLE leave(
 	leave_id SERIAL PRIMARY KEY,
 	faculty_id VARCHAR(256) NOT NULL,
@@ -66,7 +67,7 @@ CREATE TABLE leave(
 	start_date DATE NOT NULL,
 	num_days INT NOT NULL,
 	leave_route_id INT, 
-	status INT DEFAULT 0
+	status varchar(16) DEFAULT 'pending'
 );
 /* removed borrowed column*/
 
@@ -83,11 +84,11 @@ CREATE TABLE leave_history(
 	leave_id INT NOT NULL,
 	route_id INT NOT NULL,
 	curr_node INT,
-	start_post_id VARCHAR(256) ,
-	end_post_id VARCHAR(256),
+	start_post_id INT ,
+	end_post_id INT,
 	status VARCHAR(16),
 	remarks TEXT,
-	transactcreion_time TIMESTAMP
+	transaction_time TIMESTAMP
 );
 
 /*
@@ -122,9 +123,6 @@ ALTER TABLE faculty
 ADD FOREIGN KEY (leave_route_id) REFERENCES leave_routes(route_id);
 
 
---foreign key constraint for ranks
-ALTER TABLE faculty
-ADD FOREIGN KEY (post_rank) REFERENCES post_rank(rank_id);
 
 --foregin key constraint for HOD
 ALTER TABLE department

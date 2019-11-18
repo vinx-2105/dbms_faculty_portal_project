@@ -17,14 +17,6 @@
     $faculty_r = pg_fetch_assoc($faculty_q);
 
     $leave_count = $faculty_r['leave_count'];
-
-    $special_post = $faculty_r['post_rank'];
-
-    $post_id = $faculty_r['post_rank'];
-
-    if($special_post>10 && $special_post<100){
-        $special_post=10;
-    }
 ?>
 
 <html>
@@ -70,7 +62,7 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <?php
-                        echo "<h4>Number of leaves remaining this year - ".$leave_count."</h4>";
+                        echo "<h4>Number of leaves remaining this year : ".$leave_count."</h4>";
 
                         echo "<br>";
 
@@ -81,19 +73,11 @@
 
                         echo "<form class='form-inline' action='/generate_leave.php' method='post'>";
                         echo "<button type='submit' style='width:30em; margin-right:2em;' class='btn  btn-primary'>Apply for Leave</button></form>";
-                    
+
                         echo "<br>";
-                        if($special_post!=0){
-                            $special_post_q = pg_query($db_connection, "SELECT * FROM post_rank WHERE rank_id='".$special_post."'");
-                            $special_post_r = pg_fetch_assoc($special_post_q);
-                            $rank_title = $special_post_r['rank_title'];
-
+                        if($_SESSION['special_post']!=0){
                             echo "<form class='form-inline' action='/special_portal.php' method='post'>";
-                            echo "<input type='hidden' id='rank_title' name='rank_title' value='".$rank_title."'>";
-                            echo "<input type='hidden' id='special_post' name='special_post' value='".$special_post."'>";
-                            echo "<input type='hidden' id='post_id' name='post_id' value='".$post_id."'>";
-                            echo "<button type='submit' style='width:30em; margin-right:2em;' class='btn btn-primary'>Go to ".$rank_title." Portal</button></form>";
-
+                            echo "<button type='submit' style='width:30em; margin-right:2em;' class='btn btn-primary'>Go to ".$_SESSION['rank_title']." Portal</button></form>";
                         }
 
                     ?>
