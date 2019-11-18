@@ -127,11 +127,13 @@
                             else{
                                 $end_faculty=$transactions_r['approval_faculty'];
                             }
-
+                            $as_post_start=get_post_by_id($transactions_r['start_post_id'])['rank_title'];
+                            $as_post_start=get_post_by_id($transactions_r['end_post_id'])['rank_title'];
+                            
                             echo "<tr>";
                             echo "<td>".$status."</td>";
-                            echo "<td>".$start_faculty."</td>";
-                            echo "<td>".$end_faculty."</td>";
+                            echo "<td>".$start_faculty." as ".$as_post_start."</td>";
+                            echo "<td>".$end_faculty." as ".$as_post_start."</td>";
                             echo "<td>".$dt."</td>";
                             echo "<td>".$remarks."</td>";
                             echo "</tr>";
