@@ -124,10 +124,11 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
                     <?php
-                        $abs_path = get_abs_path('/../res/faculty_profile_images/default.png');
+                        // $abs_path = get_abs_path('/../res/faculty_profile_images/default.png');
+                        $pic_path = $document['pic_link'];
                         // echo "<img src='".$abs_path."' alt='Profile Pic'>" ;
                     ?>
-                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPO9CRBZvXer-YKt5Qicll9hyjJNEPt9GQGPNuJf3qjuP9Ep6aKw&s' alt='default-dp' height='150' width='150'>
+                    <img src="'".$pic_path."'" alt='default-dp' height='150' width='150'>
                     <br>
                 </div>
                 <div class="col-md-1"></div>

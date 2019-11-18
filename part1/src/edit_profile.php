@@ -178,19 +178,19 @@
                     <div class="col-md-1"></div>
                 </div>
                 <!-- update department -->
-                <div class="row edit_department_div">
+                <!-- <div class="row edit_department_div">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <form class="form-inline" action="/update_department.php" method="post">
                             <label for="update_department" style="margin-right:2em;">Department</label>
-                            <?php
-                                echo "<input type='text' style='width:50%; margin-right:2em;' class='form-control' id='update_department' placeholder="."\"".$document['department']."\""." name='update_department'>";
-                            ?>
+                            
+                                //echo "<input type='text' style='width:50%; margin-right:2em;' class='form-control' id='update_department' placeholder="."\"".$document['department']."\""." name='update_department'>";
+                            
                             <button type="submit" style='margin-right:2em;' class="btn btn-sm btn-primary">Update Department</button>
                         </form>
                     </div>
                     <div class="col-md-1"></div>
-                </div>
+                </div> -->
                 <!-- update google scholar link -->
                 <div class="row edit_google_scholar_link_div">
                     <div class="col-md-1"></div>

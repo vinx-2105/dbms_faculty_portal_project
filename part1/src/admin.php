@@ -50,22 +50,34 @@
             </div>
             <br><br><br>
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
+
+                <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Visible</th>
+                    <th scope="col">Toggle Visibility</th>
+                    </tr>
+                </thead>
                 <!-- form begins here -->
                     <?php
                         $cursor = $collection->find([]);
 
                         foreach ($cursor as $document) {
-                            echo "<form action='./toggle_visibility.php' method='post'>";
-                            echo "<span><p>".$document['username']."</p></span>";
-                            echo "<span><p>".$document['visible']."</p></span>";
+                            echo "<tr><td>".$document['username']."</td>";
+                            if($document['visible']==true){
+                                echo "<td>Yes</td>";
+                            }
+                            else{
+                                echo "<td>No</td>";
+                            }
+                            echo "<td><form method='post'>";
                             echo "<input type='hidden' id='username' name='username' value='".$document['username']."'>";
-                            echo "<input type='submit'>Toggle</button>";
+                            echo "<button formaction='./toggle_visibility.php' class='btn btn-small btn-danger'>Toggle</button></form></td></tr>";
                         }
                     ?>
-                </div>
-                <div class="col-md-2"></div>
+                    </table>
+                
             </div>
         </div>
    </body>

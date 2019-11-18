@@ -61,7 +61,9 @@
                         $cursor = $collection->find([]);
 
                         foreach ($cursor as $document) {
-                            echo "<a href='/profile_home.php/?username=".$document['username']."'>".$document['name']."</a>";
+                            if($document['visible']){
+                                echo "<p><a href='/profile_home.php/?username=".$document['username']."'>".$document['name']." -- ".$document['department']."</a></p>";
+                            }
                         }
                     ?>
                 </div>
