@@ -117,8 +117,29 @@
                             if($transactions_r['start_post_id']==0){
                                 $start_faculty=$leave_r['faculty_id'];
                             }
+                            else if($transactions_r['start_post_id']>10 && $transactions_r['start_post_id']<100){
+                                $rnk = 10;
+                                $rank_title = get_rank_title_from_id($db_connection, $rnk);
+                                $start_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                            }
+                            else{
+                                $rank_title = get_rank_title_from_id($db_connection, $transactions_r['start_post_id']);
+                                $start_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                            }
 
                             $end_faculty=get_faculty_by_post($db_connection,$transactions_r['end_post_id'])['faculty_id'];
+                            if($transactions_r['end_post_id']==0){
+                                $end_faculty=$leave_r['faculty_id'];
+                            }
+                            else if($transactions_r['end_post_id']>10 && $transactions_r['end_post_id']<100){
+                                $rnk = 10;
+                                $rank_title = get_rank_title_from_id($db_connection, $rnk);
+                                $end_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                            }
+                            else{
+                                $rank_title = get_rank_title_from_id($db_connection, $transactions_r['end_post_id']);
+                                $end_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                            }
                             if($transactions_r['end_post_id']==0){
                                 $end_faculty=$leave_r['faculty_id'];
                             }

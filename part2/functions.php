@@ -1,4 +1,18 @@
 <?php
+    function get_rank_title_from_id($db_connection, $rank_id){
+        $q = pg_query($db_connection, "SELECT * FROM post_rank WHERE rank_id=".$rank_id);
+        $r = pg_fetch_assoc($q);
+
+        return $r['rank_title'];
+    }
+
+    function get_dept_name_from_id($db_connection, $dept_id){
+        $q = pg_query($db_connection, "SELECT name FROM department WHERE dept_id=".$dept_id);
+        $r = pg_fetch_assoc($q);
+
+        return $r['name'];
+    }
+
     function get_route_by_id($db_connection, $route_id){
         $q = pg_query($db_connection, "SELECT * FROM leave_routes WHERE route_id=".$route_id);
         $r = pg_fetch_assoc($q);

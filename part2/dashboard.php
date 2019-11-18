@@ -62,13 +62,15 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <?php
-                        echo "<h4>Number of leaves remaining this year : ".$leave_count."</h4>";
+                        if($leave_count<0){
+                            echo "<h4>Leaves borrowed from future years : ".$leave_count."</h4>";
+                        }
+                        else echo "<h4>Number of leaves remaining this year : ".$leave_count."</h4>";
 
                         echo "<br>";
 
                         echo "<form class='form-inline' action='/my_leave_history.php' method='post'>";
                         echo "<button type='submit' style='width:30em; margin-right:2em;' class='btn  btn-primary'>My Leave History</button></form>";
-                    
                         echo "<br>";
 
                         echo "<form class='form-inline' action='/generate_leave.php' method='post'>";
