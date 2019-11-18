@@ -28,4 +28,5 @@
 
     $q = pg_query($db_connection, "UPDATE leave SET status='rejected' WHERE leave_id=".$transaction['leave_id']);
 
+    header("Location: ./special_portal.php");
 ?>

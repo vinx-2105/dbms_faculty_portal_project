@@ -27,6 +27,6 @@
 
     $q = pg_query($db_connection, $insert_q1.$insert_q2);
 
-    Header('Location: ./special_portal.php');
+    Header('Location: ./my_leave_history.php');
 
 ?>
