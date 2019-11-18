@@ -15,10 +15,7 @@
 
 
         // $faculty_q=pg_query($db_connection,"SELECT * FROM faculty WHERE faculty_id='".$_SESSION['username']."'");
-        if(!$faculty_q||pg_num_rows($faculty_q)<=0){
-            echo "Error";
-        }
-        else{
+        
             echo "Leave Route ".$faculty_r['faculty_id']." ".$post_r['leave_route_id'];
 
             $insert_q="INSERT INTO leave (faculty_id,leave_purpose,start_date,num_days,leave_route_id) VALUES('".$_SESSION['username']."','".$_POST['lv_purpose']."','".$_POST['lv_start_date']."',".$_POST['lv_num_days'].",".$post_r['leave_route_id'].")";
@@ -29,7 +26,6 @@
             else{
                 header('Location: ./my_leave_history.php');
             }
-        }
     }
 ?>
 
