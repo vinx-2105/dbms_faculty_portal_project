@@ -14,6 +14,9 @@
                 if(!$update_q){
                     echo "Error";
                 }
+                else{
+                    echo $posts_r['rank_title']. "Success<br>";
+                }
             }
         }
     }
