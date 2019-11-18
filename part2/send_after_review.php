@@ -20,8 +20,10 @@
 
     $q = pg_query($db_connection, "UPDATE leave_history SET status='sent for review' WHERE transaction_id=".$transaction_id);
 
-    $insert_q1 = "INSERT INTO leave_history(leave_id, route_id, curr_node, start_post_id, end_post_id, status, remarks, transaction_time) ";
-    $insert_q2 = "VALUES(".$transaction['leave_id'].",".$transaction['route_id'].",".$transaction['curr_node'].",".$transaction['end_post_id'].",".$transaction['start_post_id'].",'pending', '".$_POST['remarks']."', now())";
+    $approval_faculty=get_faculty_by_post($db_connection,$transaction['end_post_id']);
+
+    $insert_q1 = "INSERT INTO leave_history(leave_id, route_id, curr_node, start_post_id, end_post_id,approval_faculty, status, remarks, transaction_time) ";
+    $insert_q2 = "VALUES(".$transaction['leave_id'].",".$transaction['route_id'].",".$transaction['curr_node'].",".$transaction['end_post_id'].",".$transaction['start_post_id'].",'".$approval_faculty."','pending', '".$_POST['remarks']."', now())";
 
     $q = pg_query($db_connection, $insert_q1.$insert_q2);
 

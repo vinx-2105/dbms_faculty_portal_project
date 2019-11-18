@@ -101,6 +101,7 @@ CREATE TABLE leave_history(
 	curr_node INT,
 	start_post_id INT ,
 	end_post_id INT,
+	approval_faculty VARCHAR(256),
 	status VARCHAR(16),
 	remarks TEXT,
 	transaction_time TIMESTAMP

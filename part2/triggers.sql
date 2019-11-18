@@ -144,6 +144,7 @@ DECLARE
     lv_start_post INT :=0;
     lv_end_post INT;
     lv_status VARCHAR(16):='pending';
+    lv_approval_faculty VARCHAR(256);
 BEGIN
     RAISE INFO 'route %',NEW.leave_route_id;
 
@@ -153,7 +154,8 @@ BEGIN
     if lv_end_post=10 THEN
         lv_end_post:=lv_end_post+lv_start_dept;
     END IF;
-    INSERT INTO leave_history (leave_id, route_id, curr_node,start_post_id, end_post_id, status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,lv_start_post,lv_end_post,lv_status,NOW());
+    SELECT faculty_id INTO lv_approval_faculty FROM faculty WHERE post_rank=lv_end_post;
+    INSERT INTO leave_history (leave_id, route_id, curr_node,start_post_id, end_post_id, approval_faculty,status,  transaction_time) VALUES (NEW.leave_id,NEW.leave_route_id,lv_curr_node,lv_start_post,lv_end_post,lv_approval_faculty,lv_status,NOW());
     RETURN NEW;
 END;
 $$
