@@ -28,8 +28,6 @@
             }
         }
     }
-
-    // header('Location: ./insert_dept_db.php');
 ?>
 
   

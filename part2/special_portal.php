@@ -42,6 +42,7 @@
         $effective_num_days = $this_leave_r['num_days']-1;
         echo "<p><small>End Date of Leave - ".date('Y-m-d', strtotime($this_leave_r['start_date'].'+'.$effective_num_days.'days'))."</small></p>";
         echo "<p><small>Purpose of Leave - ".$this_leave_r['leave_purpose']."</small></p>";
+        echo "<p><small>Remarks - ".$trans_pending_r['remarks']."</small></p>";
         // option 1 - accept
         echo "<form class='form-inline'  method='post'>";
         echo "<label for='remarks' style='margin-right:0.2em;'><small>Remarks</small></label>";
@@ -49,11 +50,8 @@
         echo "<input type='hidden' name='transaction_id' id='transaction_id' value='".$trans_pending_r['transaction_id']."'>";
         echo "<input type='submit'  style='margin-right:0.4em;' class='btn btn-sm btn-success' formaction='/accept_application.php' value='Accept'>";
         //option 2 - reject
-        // echo "<input type='hidden' id='leave_application_id' name='leave_application_id' value='".$my_leaves_r['leave_id']."'>";
         echo "<input type='submit' style='margin-right:0.4em;' class='btn btn-sm btn-danger' formaction='/reject_application.php' value='Reject'>";
         //option 3 - review
-        // echo "<input type='hidden' id='leave_application_id' name='leave_application_id' value='".$my_leaves_r['leave_id']."'>";
-        // echo "<button type='submit'  class='btn btn-sm btn-danger'><small>Send for Review</small></button></form>";
         echo "<input type='submit' style='margin-right:0.4em;' class='btn btn-sm btn-warning' formaction='/review_application.php' value='Send for Review'></form>";
 
         echo "</div><div class='col-md-2'></div></div>";

@@ -20,7 +20,7 @@
     $leave_id = $_GET['leave_id'];
 
     $leave_r = get_leave_by_id($db_connection, $leave_id);
-    $route_r = get_route_by_id($db_connection, $leave_r['route_id']);
+    $route_r = get_route_by_id($db_connection, $leave_r['leave_route_id']);
     $faculty_r = get_faculty_by_id($db_connection, $faculty_id);
 
     $post_rank = $faculty_r['post_rank'];
@@ -48,10 +48,10 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <!-- <div class="col-md-2"></div> -->
+            <div class="col-md-12">
                 <?php
-                    echo "<br><p><small>Leave ID - ".$leave_id."</small></p>";
+                    echo "<br><p><small><strong>Leave ID - ".$leave_id."</strong></small></p>";
                     echo "<p><small>Faculty ID - ".$leave_r['faculty_id']."</small></p>";
                     echo "<p><small>Start Date of Leave - ".$leave_r['start_date']."</small></p>";
                     $effective_num_days = $leave_r['num_days']-1;
@@ -60,7 +60,7 @@
 
                 ?>
             </div>
-            <div class="col-md-2"></div>
+            <!-- <div class="col-md-2"></div> -->
         </div>
         <div class="row" >
             <div class='col-md-12'>

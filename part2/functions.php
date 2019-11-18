@@ -2,7 +2,7 @@
     function get_route_by_id($db_connection, $route_id){
         $q = pg_query($db_connection, "SELECT * FROM leave_routes WHERE route_id=".$route_id);
         $r = pg_fetch_assoc($q);
-        
+
         $num_nodes = $r['num_nodes'];
 
 
@@ -18,7 +18,7 @@
     }
 
     function get_faculty_by_id($db_connection, $faculty_id){
-        $q = pg_query($db_connection, "SELECT * FROM faculty WHERE faculty_id=".$faculty_id);
+        $q = pg_query($db_connection, "SELECT * FROM faculty WHERE faculty_id='".$faculty_id."'");
         $r = pg_fetch_assoc($q);
         return $r;
     }
