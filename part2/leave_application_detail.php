@@ -113,43 +113,28 @@
                                     $action =  $status." by ".$action_taker['faculty_id'];
                                 }
                             }
-                            $start_faculty=get_faculty_by_post($db_connection,$transactions_r['start_post_id'])['faculty_id'];
+                            $start_faculty=NULL;
                             if($transactions_r['start_post_id']==0){
                                 $start_faculty=$leave_r['faculty_id'];
                             }
-                            else if($transactions_r['start_post_id']>10 && $transactions_r['start_post_id']<100){
-                                $rnk = 10;
-                                $rank_title = get_rank_title_from_id($db_connection, $rnk);
-                                $start_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                            else{
+                                $start_faculty=$transactions_r['approval_faculty'];
+                            }
+                            $end_faculty=NULL;
+                            if($transactions_r['end_post_id']==0){
+                                $end_faculty=$leave_r['faculty_id'];
                             }
                             else{
-                                $rank_title = get_rank_title_from_id($db_connection, $transactions_r['start_post_id']);
-                                $start_faculty=$leave_r['faculty_id']." as ".$rank_title;
+                                $end_faculty=$transactions_r['approval_faculty'];
                             }
 
-                            $end_faculty=get_faculty_by_post($db_connection,$transactions_r['end_post_id'])['faculty_id'];
-                            if($transactions_r['end_post_id']==0){
-                                $end_faculty=$leave_r['faculty_id'];
-                            }
-                            else if($transactions_r['end_post_id']>10 && $transactions_r['end_post_id']<100){
-                                $rnk = 10;
-                                $rank_title = get_rank_title_from_id($db_connection, $rnk);
-                                $end_faculty=$leave_r['faculty_id']." as ".$rank_title;
-                            }
-                            else{
-                                $rank_title = get_rank_title_from_id($db_connection, $transactions_r['end_post_id']);
-                                $end_faculty=$leave_r['faculty_id']." as ".$rank_title;
-                            }
-                            if($transactions_r['end_post_id']==0){
-                                $end_faculty=$leave_r['faculty_id'];
-                            }
-                                echo "<tr>";
-                                echo "<td>".$status."</td>";
-                                echo "<td>".$start_faculty."</td>";
-                                echo "<td>".$end_faculty."</td>";
-                                echo "<td>".$dt."</td>";
-                                echo "<td>".$remarks."</td>";
-                                echo "</tr>";
+                            echo "<tr>";
+                            echo "<td>".$status."</td>";
+                            echo "<td>".$start_faculty."</td>";
+                            echo "<td>".$end_faculty."</td>";
+                            echo "<td>".$dt."</td>";
+                            echo "<td>".$remarks."</td>";
+                            echo "</tr>";
 
                             $i++;
                         }

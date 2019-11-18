@@ -19,7 +19,7 @@
 
     $q = pg_query($db_connection, "UPDATE leave_history SET status='sent' WHERE transaction_id=".$transaction_id);
 
-    $approval_faculty=get_faculty_by_post($db_connection,$transaction['start_post_id']);
+    $approval_faculty=get_faculty_by_post($db_connection,$transaction['end_post_id'])['faculty_id'];
     $q = pg_query($db_connection, "UPDATE leave_history SET approval_faculty='".$approval_faculty."' WHERE transaction_id=".$transaction_id);
 
 
@@ -38,7 +38,7 @@
         if($next_node==10){
             $next_node+=get_faculty_by_id($db_connection,$faculty_id)['dept_id'];
         }
-        $approval_faculty=get_faculty_by_post($db_connection,$next_node);
+        $approval_faculty=get_faculty_by_post($db_connection,$next_node)['faculty_id'];
         $insert_q1 = "INSERT INTO leave_history(leave_id, route_id, curr_node, start_post_id, end_post_id,approval_faculty, status, transaction_time) ";
         $insert_q2 = "VALUES(".$transaction['leave_id'].",".$transaction['route_id'].",".$transaction['curr_node']."+1,".$transaction['start_post_id'].",".$next_node.",'".$approval_faculty."','pending', now())";
         $q = pg_query($db_connection, $insert_q1.$insert_q2);

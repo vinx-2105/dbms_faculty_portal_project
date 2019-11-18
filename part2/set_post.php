@@ -21,6 +21,8 @@
                             while ($row=pg_fetch_assoc($departments_q)){
                                 echo "<label for='dept".$row['dept_id']."'>".$row['name']."</label>";
                                 echo "<input type='email' name='dept".$row['dept_id']."' value='".$row['hod_faculty_id']."'><br>";
+                                echo "<input type='date' name='post_start_date".$row['dept_id']."'><br>";
+                                echo "<input type='date' name='post_end_date".$row['dept_id']."'><br>";
                             }
                             echo "<input type='submit' value='Submit'>";
                         ?>

@@ -17,6 +17,11 @@
 
         $post_id = $faculty_r['post_rank'];
 
+        if($post_id==-1){
+            //check if faculty is retired
+            header('Location: ./login.php');
+        }
+
         if($special_post>10 && $special_post<100){
             $special_post=10;
         }

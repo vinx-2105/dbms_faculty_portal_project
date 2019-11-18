@@ -41,7 +41,7 @@
         $effective_num_days = $this_leave_r['num_days']-1;
         echo "<p><small>End Date of Leave - ".date('Y-m-d', strtotime($this_leave_r['start_date'].'+'.$effective_num_days.'days'))."</small></p>";
         echo "<p><small>Purpose of Leave - ".$this_leave_r['leave_purpose']."</small></p>";
-        echo "<p><small>Remarks - ".$trans_pending_r['remarks']."</small></p>";
+        echo "<p><small>Latest Remarks - ".$trans_pending_r['remarks']."</small></p>";
         // option 1 - accept
         echo "<form class='form-inline'  method='post'>";
         echo "<label for='remarks' style='margin-right:0.2em;'><small>Remarks</small></label>";

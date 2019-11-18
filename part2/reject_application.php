@@ -18,7 +18,7 @@
     $route_num_nodes = $route[0];
 
     $q = pg_query($db_connection, "UPDATE leave_history SET status='sent' WHERE transaction_id=".$transaction_id);
-    $approval_faculty=get_faculty_by_post($db_connection,$transaction['start_post_id']);
+    $approval_faculty=get_faculty_by_post($db_connection,$transaction['end_post_id'])['faculty_id'];
     $q = pg_query($db_connection, "UPDATE leave_history SET approval_faculty='".$approval_faculty."' WHERE transaction_id=".$transaction_id);
 
     $insert_q1 = "INSERT INTO leave_history(leave_id, route_id, curr_node, start_post_id, end_post_id,approval_faculty, status, remarks, transaction_time) ";

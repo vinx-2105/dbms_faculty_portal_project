@@ -33,7 +33,7 @@
             'publications'=>array(),
             'awards'=>array(),
             'grants'=>array(),
-            'pic_link'=>array(),
+            'pic_link'=>"",
         ]
     );
 
